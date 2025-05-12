@@ -12,25 +12,26 @@ spring:
   jpa:
     show-sql: false
     generate-ddl: false
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: none
       use-new-id-generator-mappings: false
 
   datasource:
-    url: jdbc:mysql:thin://operations-mysql:3306/messagegateway
+    url: ${GATEWAY_SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/messagegateway}
     username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:password}
+    password: ${MYSQL_PASSWORD:skdcnwauicn2ucnaecasdsajdnizucawencascdca}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 # Status Callback configuration for Twilio. Port will be taken from server configuration
 hostconfig:
-  host: localhost
-  protocol: http
+  host: ${HOSTCONFIG_HOST:b2a1-102-218-39-110.ngrok-free.app}
+  protocol: ${HOSTCONFIG_PROTOCOL:https}
 
 callbackconfig:
-  host: 0.0.0.0
-  protocol: http
-  port: 5000
+  host: ${CALLBACKCONFIG_HOST:0.0.0.0}
+  protocol: ${CALLBACKCONFIG_PROTOCOL:http}
+  port: ${CALLBACKCONFIG_PORT:5000}
 
 application:
   version: 1.0.0
@@ -88,7 +89,8 @@ zeebe:
     security:
       plaintext: true
   broker:
-    contactpoint: "zeebe-zeebe-gateway:26500"
+#    contactpoint: "zeebe-zeebe-gateway:26500"
+    contactpoint: "${ZEEBE_BROKER_CONTACTPOINT:localhost:26500}"
   worker:
     timer: "PT15S"
     retries: 3

@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
-@RequestMapping("/twilio")
+@RequestMapping("/smsgateway/twilio")
 public class TwilioApiResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(TwilioApiResource.class);
@@ -50,6 +52,7 @@ public class TwilioApiResource {
     	if(message != null) {
     		logger.info("Status Callback received from Twilio for "+messageId+" with status:"+payload.getMessageStatus());
     		message.setDeliveryStatus(TwilioStatus.smsStatus(payload.getMessageStatus()).getValue());
+			message.setDeliveredOnDate(new Date());
     		this.smsOutboundMessageRepository.save(message) ;
     	}else {
     		logger.info("Message with Message id "+messageId+" Not found");

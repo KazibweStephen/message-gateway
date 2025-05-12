@@ -91,6 +91,7 @@ public class SMSMessageService {
 		Tenant tenant = this.securityService.authenticate(tenantId, tenantAppKey) ;
 		for(OutboundMessages message: messages) {
 			message.setTenant(tenant.getId());
+			if(message.getType()==null) message.setType("NORMAL");
 		}
 		this.smsOutboundMessageRepository.saveAll(messages) ;
 		this.executorService.execute(new MessageTask(tenant, this.smsOutboundMessageRepository, this.smsProviderFactory, messages));

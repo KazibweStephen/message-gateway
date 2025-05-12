@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/smsbridges")
+@RequestMapping("/smsgateway/smsbridges")
 public class SmsBridgeApiResource {
 
 	private final SMSBridgeService smsBridgeService ;

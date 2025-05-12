@@ -49,7 +49,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sms")
+@RequestMapping("/smsgateway/sms")
 public class SmsApiResource {
 
 	//This class sends TRANSACTIONAL & PROMOTIONAL SMS

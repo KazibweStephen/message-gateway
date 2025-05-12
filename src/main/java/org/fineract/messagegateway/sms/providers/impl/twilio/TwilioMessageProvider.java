@@ -54,8 +54,10 @@ public class TwilioMessageProvider extends Provider {
     @Autowired
     TwilioMessageProvider(final HostConfig hostConfig) {
     	builder = new StringBuilder() ;
-    	callBackUrl = String.format("%s://%s:%d/twilio/report/", hostConfig.getProtocol(),  hostConfig.getHostName(), hostConfig.getPort());
-    	logger.info("Registering call back to twilio:"+callBackUrl);
+//    	callBackUrl = String.format("%s://%s:%d/twilio/report/", hostConfig.getProtocol(),  hostConfig.getHostName(), hostConfig.getPort());
+        callBackUrl = String.format("%s://%s/twilio/report/", hostConfig.getProtocol(),  hostConfig.getHostName());
+
+        logger.info("Registering call back to twilio:"+callBackUrl);
     }
 
     
@@ -81,7 +83,10 @@ public class TwilioMessageProvider extends Provider {
         	if(message.getDeliveryStatus().equals(SmsMessageStatusType.FAILED.getValue())) {
         		message.setDeliveryErrorMessage(twilioMessage.getErrorMessage());
         		logger.error("Sending SMS to :"+message.getMobileNumber()+" failed with reason "+twilioMessage.getErrorMessage());
-        	}
+        	} else if (message.getDeliveryStatus().equals(SmsMessageStatusType.DELIVERED.getValue())) {
+                message.setDeliveredOnDate(twilioMessage.getDateUpdated().toDate());
+                message.setSubmittedOnDate(twilioMessage.getDateCreated().toDate());
+            }
         }catch (ApiException e) {
         	logger.error("ApiException while sending message to :"+message.getMobileNumber()+" with reason "+e.getMessage());
         	message.setDeliveryStatus(SmsMessageStatusType.FAILED.getValue());

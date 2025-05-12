@@ -20,5 +20,6 @@ repos/
 *.iws
 
 smsmoduledb.*
+.env
 
 !gradle/wrapper/gradle-wrapper.jar

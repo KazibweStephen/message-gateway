@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tenants")
+@RequestMapping("/smsgateway/tenants")
 public class TenantsApiResource {
 
 	private final TenantsService tenantService ;
